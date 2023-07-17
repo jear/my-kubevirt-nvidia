@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     cdi.kubevirt.io: cdi-uploadproxy
-  name: cdi-uploadproxy-LB
+  name: cdi-uploadproxy-lb
   namespace: cdi
 spec:
   externalTrafficPolicy: Cluster
