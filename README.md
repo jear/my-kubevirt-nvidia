@@ -104,6 +104,9 @@ spec:
 #      mediatedDevices:
 #      - mdevNameSelector: "GRID T4-1Q"
 #        resourceName: "nvidia.com/GRID_T4-1Q"
+#      hostDevices:
+#      - deviceName: intel.com/qat
+#        name: quickaccess1
 
 
 ...
