@@ -90,13 +90,13 @@ spec:
       featureGates:
       - GPU
       - DisableMDEVConfiguration
-      - HostDevices
-      - LiveMigration
+#      - HostDevices
+#      - LiveMigration
     permittedHostDevices:
       gpus:
       - externalResourceProvider: true
-        pciVendorSelector: 10DE:13f3
-        resourceName: nvidia.com/GM204GL
+        pciVendorSelector: "10DE:13f3"
+        resourceName: "nvidia.com/GM204GL"
 #      mediatedDevices:
 #      - externalResourceProvider: true
 #        mdevNameSelector: NVIDIA A10-24Q
