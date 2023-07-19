@@ -1,0 +1,34 @@
+kind: VirtualMachineInstance
+metadata:
+  labels:
+    special: vmi-nvme
+  name: vmi-nvme
+spec:
+  nodeSelector: 
+    kubernetes.io/hostname: node03   # <--
+  domain:
+    devices:
+      disks:
+      - disk:
+          bus: virtio
+        name: containerdisk
+      - disk:
+          bus: virtio
+        name: cloudinitdisk
+      hostDevices:  # <--
+      - name: nvme  # <--
+        deviceName: devices.kubevirt.io/nvme  # <--
+    resources:
+      requests:
+        memory: 1024M
+  terminationGracePeriodSeconds: 0
+  volumes:
+  - containerDisk:
+      image: registry:5000/kubevirt/fedora-with-test-tooling-container-disk:devel
+    name: containerdisk
+  - cloudInitNoCloud:
+      userData: |-
+        #cloud-config
+        password: fedora
+        chpasswd: { expire: False }
+    name: cloudinitdisk
