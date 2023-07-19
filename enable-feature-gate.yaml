@@ -8,4 +8,4 @@ spec:
   configuration:
     developerConfiguration: 
       featureGates:
-        - LiveMigration
+        - DisableMDEVConfiguration
