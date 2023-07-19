@@ -7,7 +7,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 35Gi
+      storage: 150Gi
 ---
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
@@ -24,6 +24,9 @@ spec:
         cpu:
           cores: 6
         devices:
+          gpus:
+          - deviceName: nvidia.com/GM204GL
+            name: gpu1
           disks:
           - bootOrder: 1
             cdrom:
