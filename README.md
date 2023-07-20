@@ -70,7 +70,6 @@ kubectl delete -f https://github.com/kubevirt/kubevirt/releases/download/${VERSI
 
 https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-operator-kubevirt.html
 
-
 https://kubevirt.io/user-guide/virtual_machines/host-devices/#listing-permitted-devices
 
 # Get device ID
@@ -87,6 +86,7 @@ lspci -DD|grep NVIDIA
 
 ####
 ssh worker-gpu-2
+lspci -nnv|grep -i nvidia
 23:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1) (prog-if 00 [VGA controller])
 	Subsystem: NVIDIA Corporation GM204GL [Tesla M6] [10de:1143]
 	Kernel driver in use: nvidia
