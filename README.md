@@ -9,6 +9,9 @@ https://medium.com/adessoturkey/create-a-windows-vm-in-kubernetes-using-kubevirt
 # if you can access to nvid.nvidia.com..... Build nVidia vGPU (for kubevirt use case )
 Download the vGPU Software from the NVIDIA Licensing Portal. https://nvid.nvidia.com/dashboard/#/dashboard
 https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-operator-kubevirt.html#build-vgpu-manager-image
+```
+
+```
 # Install the GPU Operator (without NVIDIA vGPU)
 helm .........  --set sandboxWorkloads.enabled=true
 ```
