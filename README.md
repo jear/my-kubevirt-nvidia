@@ -1,6 +1,6 @@
 # GPU operator
 ```
-#  for Kubevirt 
+#  for Kubevirt with sandboxing
 helm upgrade --install gpu-operator nvidia/gpu-operator -n gpu-operator --create-namespace \
              --set operator.upgradeCRD=true --disable-openapi-validation \
              --set sandboxWorkloads.enabled=true
@@ -22,10 +22,7 @@ Download the vGPU Software from the NVIDIA Licensing Portal. https://nvid.nvidia
 https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-operator-kubevirt.html#build-vgpu-manager-image
 ```
 
-```
-# Install the GPU Operator ( sandboxing )
-helm .........  --set sandboxWorkloads.enabled=true
-```
+
 
 ```
 kubectl get node -o json | jq '.items[].metadata.labels' | grep -i product
