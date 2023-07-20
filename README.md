@@ -16,6 +16,7 @@ helm .........  --set sandboxWorkloads.enabled=true
 ```
 # Host preparation for PCI Passthrough
 https://kubevirt.io/user-guide/virtual_machines/host-devices/#host-preparation-for-pci-passthrough
+https://askubuntu.com/questions/1406888/ubuntu-22-04-gpu-passthrough-qemu
 
 lspci -nn | grep -i nvidia
 23:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1)
@@ -24,6 +25,26 @@ lspci -nn | grep -i nvidia
 sudo vi /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on kvm.ignore_msrs=1 vfio-pci.ids=10de:13f3"
 sudo vi /etc/default/grub
+
+# reboot
+# Check for IOMMU Support on your CPU
+For AMD processor:
+$ cat /proc/cpuinfo | grep --color svm
+
+For Intel processor:
+$ cat /proc/cpuinfo | grep --color vmx
+
+# Check that IOMMU is enabled
+sudo dmesg | grep -i -e DMAR -e IOMMU
+
+vi /etc/modprobe.d/vfio.conf
+blacklist nouveau
+blacklist snd_hda_intel
+options vfio-pci ids=10aa:10bb,01cc:01ee
+
+sudo update-initramfs -u
+
+
 ```
 
 ```
