@@ -14,6 +14,13 @@ helm .........  --set sandboxWorkloads.enabled=true
 ```
 
 ```
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i product
+
+  "nvidia.com/gpu.product": "Tesla-M6",
+
+```
+
+```
 # Host preparation for PCI Passthrough
 https://kubevirt.io/user-guide/virtual_machines/host-devices/#host-preparation-for-pci-passthrough
 https://askubuntu.com/questions/1406888/ubuntu-22-04-gpu-passthrough-qemu
