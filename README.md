@@ -1,6 +1,14 @@
-# my-kubevirt-nvidia
+# GPU operator
 ```
-# Windows
+#  for Kubevirt 
+helm upgrade --install gpu-operator nvidia/gpu-operator -n gpu-operator --create-namespace \
+             --set operator.upgradeCRD=true --disable-openapi-validation \
+             --set sandboxWorkloads.enabled=true
+
+```
+
+```
+# Kubevirt Windows without nVidia
 https://medium.com/adessoturkey/create-a-windows-vm-in-kubernetes-using-kubevirt-b5f54fb10ffd
 ```
 
