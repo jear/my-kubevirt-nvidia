@@ -25,6 +25,7 @@ https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-operator
 
 
 ```
+# Node selector
 kubectl get node -o json | jq '.items[].metadata.labels' | grep -i product
 
   "nvidia.com/gpu.product": "Tesla-M6",
