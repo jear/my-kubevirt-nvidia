@@ -1,12 +1,7 @@
 # my-kubevirt-nvidia
 ```
-
-
 # Windows
 https://medium.com/adessoturkey/create-a-windows-vm-in-kubernetes-using-kubevirt-b5f54fb10ffd
-
-k virt image-upload pvc iso-win10 --size=10G --image-path=/home/ubuntu/workspace/github/win.iso --uploadproxy-url=https://10.69.41.74 --insecure
-
 ```
 
 # Kubevirt
@@ -21,6 +16,14 @@ helm .........  --set sandboxWorkloads.enabled=true
 ```
 # Host preparation for PCI Passthrough
 https://kubevirt.io/user-guide/virtual_machines/host-devices/#host-preparation-for-pci-passthrough
+
+lspci -nn | grep -i nvidia
+23:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1)
+26:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1)
+
+
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on kvm.ignore_msrs=1 vfio-pci.ids=[10de:13f3"
+
 ```
 
 ```
