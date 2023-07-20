@@ -110,6 +110,18 @@ lspci -DD|grep NVIDIA
 k get kubevirts.kubevirt.io -n kubevirt kubevirt -o yaml
 
 kubectl edit kubevirts.kubevirt.io -n kubevirt
+
+spec:
+  configuration:
+    developerConfiguration:
+      featureGates:
+      - GPU
+      - DisableMDEVConfiguration
+    permittedHostDevices:
+      pciHostDevices:
+      - pciVendorSelector: 10DE:13f3
+        resourceName: nvidia.com/gpu
+
 ...
 spec:
   certificateRotateStrategy: {}
