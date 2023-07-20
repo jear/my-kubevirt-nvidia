@@ -40,7 +40,7 @@ sudo dmesg | grep -i -e DMAR -e IOMMU
 vi /etc/modprobe.d/vfio.conf
 blacklist nouveau
 blacklist snd_hda_intel
-options vfio-pci ids=10aa:10bb,01cc:01ee
+options vfio-pci ids=10de:13f3
 
 sudo update-initramfs -u
 
