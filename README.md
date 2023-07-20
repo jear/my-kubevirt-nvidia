@@ -22,11 +22,6 @@ lspci -nn | grep -i nvidia
 23:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1)
 26:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1)
 
-sudo vi /etc/default/grub
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on kvm.ignore_msrs=1 vfio-pci.ids=10de:13f3"
-sudo vi /etc/default/grub
-
-# reboot
 # Check for IOMMU Support on your CPU
 For AMD processor:
 $ cat /proc/cpuinfo | grep --color svm
@@ -36,6 +31,12 @@ $ cat /proc/cpuinfo | grep --color vmx
 
 # Check that IOMMU is enabled
 sudo dmesg | grep -i -e DMAR -e IOMMU
+
+sudo vi /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on kvm.ignore_msrs=1 vfio-pci.ids=10de:13f3"
+sudo update-grub
+
+# reboot
 
 vi /etc/modprobe.d/vfio.conf
 blacklist nouveau
