@@ -7,12 +7,15 @@ helm upgrade --install gpu-operator nvidia/gpu-operator -n gpu-operator --create
 
 ```
 
+
+# Kubevirt
+
 ```
 # Kubevirt Windows without nVidia
 https://medium.com/adessoturkey/create-a-windows-vm-in-kubernetes-using-kubevirt-b5f54fb10ffd
 ```
 
-# Kubevirt
+
 ```
 # if you can access to nvid.nvidia.com..... Build nVidia vGPU (for kubevirt use case )
 Download the vGPU Software from the NVIDIA Licensing Portal. https://nvid.nvidia.com/dashboard/#/dashboard
@@ -20,7 +23,7 @@ https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-operator
 ```
 
 ```
-# Install the GPU Operator (without NVIDIA vGPU)
+# Install the GPU Operator ( sandboxing )
 helm .........  --set sandboxWorkloads.enabled=true
 ```
 
