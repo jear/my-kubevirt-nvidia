@@ -60,12 +60,41 @@ sudo update-grub
 
 # reboot
 
+modinfo vfio
+name:           vfio
+filename:       (builtin)
+softdep:        post: vfio_iommu_type1 vfio_iommu_spapr_tce
+alias:          devname:vfio/vfio
+alias:          char-major-10-196
+description:    VFIO - User Level meta-driver
+author:         Alex Williamson <alex.williamson@redhat.com>
+license:        GPL v2
+version:        0.3
+parm:           enable_unsafe_noiommu_mode:Enable UNSAFE, no-IOMMU mode.  This mode provides no device isolation, no DMA translation, no host kernel protection, cannot be used for device assignment to virtual machines, requires RAWIO permissions, and will taint the kernel.  If you do not know what this is for, step away. (default: false) (bool)
+
+
 vi /etc/modprobe.d/vfio.conf
 blacklist nouveau
 blacklist snd_hda_intel
 options vfio-pci ids=10de:13f3
 
 sudo update-initramfs -u
+
+
+lspci -DD|grep NVIDIA
+0000:23:00.0 VGA compatible controller: NVIDIA Corporation GM204GL [Tesla M6] (rev a1)
+0000:26:00.0 VGA compatible controller: NVIDIA Corporation GM204GL [Tesla M6] (rev a1)
+
+# Bind that device to the vfio-pci driver: 
+https://kubevirt.io/user-guide/virtual_machines/host-devices/#preparation-of-pci-devices-for-passthrough
+
+echo 0000:23:00.0 > /sys/bus/pci/drivers/nvidia/unbind
+echo "vfio-pci" > /sys/bus/pci/devices/0000\:23\:00.0/driver_override
+echo 0000:23:00.0 > /sys/bus/pci/drivers/vfio-pci/bind
+
+echo 0000:26:00.0 > /sys/bus/pci/drivers/nvidia/unbind
+echo "vfio-pci" > /sys/bus/pci/devices/0000\:26\:00.0/driver_override
+echo 0000:26:00.0 > /sys/bus/pci/drivers/vfio-pci/bind
 
 
 ```
