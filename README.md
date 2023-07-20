@@ -18,15 +18,18 @@ helm .........  --set sandboxWorkloads.enabled=true
 https://kubevirt.io/user-guide/virtual_machines/host-devices/#host-preparation-for-pci-passthrough
 https://askubuntu.com/questions/1406888/ubuntu-22-04-gpu-passthrough-qemu
 
-lspci -nn | grep -i nvidia
+lspci -nnk | grep -i nvidia
 23:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1)
+	Subsystem: NVIDIA Corporation GM204GL [Tesla M6] [10de:1143]
+	Kernel modules: nvidiafb, nouveau
 26:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1)
+	Subsystem: NVIDIA Corporation GM204GL [Tesla M6] [10de:1143]
+	Kernel modules: nvidiafb, nouveau
 
 # Check for IOMMU Support on your CPU
-For AMD processor:
+# For AMD processor:
 $ cat /proc/cpuinfo | grep --color svm
-
-For Intel processor:
+# For Intel processor:
 $ cat /proc/cpuinfo | grep --color vmx
 
 # Check that IOMMU is enabled
