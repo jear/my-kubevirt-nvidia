@@ -21,7 +21,7 @@ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i product
 ```
 
 
-# Kubevirt
+# Kubevirt + Rook-Ceph + nVidia GPU operator and passthrough
 
 ```
 # Test Kubevirt Windows without attaching a nVidia GPU   => OK
