@@ -71,11 +71,14 @@ license:        GPL v2
 version:        0.3
 parm:           enable_unsafe_noiommu_mode:Enable UNSAFE, no-IOMMU mode.  This mode provides no device isolation, no DMA translation, no host kernel protection, cannot be used for device assignment to virtual machines, requires RAWIO permissions, and will taint the kernel.  If you do not know what this is for, step away. (default: false) (bool)
 
-
-vi /etc/modprobe.d/vfio.conf
+cat /etc/modprobe.d/blacklist-nvidia-nouveau.conf 
 blacklist nouveau
+options nouveau modeset=0
+
+cat /etc/modprobe.d/vfio.conf
 blacklist snd_hda_intel
-options vfio-pci ids=10de:13f3
+options vfio-pci ids=xxxx:yyyy
+
 
 sudo update-initramfs -u
 
