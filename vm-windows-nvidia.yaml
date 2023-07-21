@@ -1,76 +1,57 @@
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-    name: pv-volume 
-    labels:
-      type: local
-spec:
-    storageClassName: manual 
-    capacity:
-      storage: 50Gi
-    accessModes:
-      - ReadWriteOnce 
-    persistentVolumeReclaimPolicy: Retain
-    hostPath:
-      path: "/mnt/data" 
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: winhd2
+  name: winhd1
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
-        #storageClassName: storage-nonblock 
-  storageClassName: manual
+      storage: 150Gi
 ---
-apiVersion: kubevirt.io/v1alpha3
+apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: windows-10-iso
+  name: win10-tesla-m6
 spec:
   running: false
   template:
     metadata:
       labels:
-        kubevirt.io/domain: windows-10-iso
+        kubevirt.io/domain: win10-tesla-m6
     spec:
       domain:
         cpu:
-          cores: 4
+          cores: 6
         devices:
+          gpus:
+          - deviceName: "nvidia.com/ARIEL_DEVICE_24_FUNCTION_3"
+            name: gpu1
           disks:
-          - cdrom:
+          - bootOrder: 1
+            cdrom:
               bus: sata
-            name: win-iso
-            bootOrder: 2
-          - disk:
+            name: cdromiso
+          - bootOrder: 2
+            disk:
               bus: virtio
             name: harddrive
-            bootOrder: 1
-          - cdrom:
+          - bootOrder: 3
+            cdrom:
               bus: sata
-              readonly: true
-            name: virtio-drivers
-            bootOrder: 3
-          gpus:
-          - deviceName: nvidia.com/gpu
-            name: gpu1
+            name: virtiocontainerdisk
         machine:
           type: q35
         resources:
           requests:
-            memory: 8G
+            memory: 12G
       volumes:
-      - name: win-iso
-        containerDisk:
-          image: /windows-10-iso:latest
-      - name: virtio-drivers
-        containerDisk:
-          image: quay.io/kubevirt/virtio-container-disk
+      - name: cdromiso
+        persistentVolumeClaim:
+          claimName: iso-win10
       - name: harddrive
         persistentVolumeClaim:
-          claimName: winhd2
+          claimName: winhd1
+      - containerDisk:
+          image: quay.io/kubevirt/virtio-container-disk
+        name: virtiocontainerdisk

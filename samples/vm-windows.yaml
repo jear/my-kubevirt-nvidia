@@ -24,9 +24,6 @@ spec:
         cpu:
           cores: 6
         devices:
-          gpus:
-          - deviceName: nvidia.com/GM204GL
-            name: gpu1
           disks:
           - bootOrder: 1
             cdrom:

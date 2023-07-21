@@ -8,4 +8,5 @@ spec:
   configuration:
     developerConfiguration: 
       featureGates:
+        - GPU
         - DisableMDEVConfiguration

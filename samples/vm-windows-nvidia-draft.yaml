@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: pv-volume 
+    labels:
+      type: local
+spec:
+    storageClassName: manual 
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce 
+    persistentVolumeReclaimPolicy: Retain
+    hostPath:
+      path: "/mnt/data" 
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: winhd2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+        #storageClassName: storage-nonblock 
+  storageClassName: manual
+---
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  name: windows-10-iso
+spec:
+  running: false
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: windows-10-iso
+    spec:
+      domain:
+        cpu:
+          cores: 4
+        devices:
+          disks:
+          - cdrom:
+              bus: sata
+            name: win-iso
+            bootOrder: 2
+          - disk:
+              bus: virtio
+            name: harddrive
+            bootOrder: 1
+          - cdrom:
+              bus: sata
+              readonly: true
+            name: virtio-drivers
+            bootOrder: 3
+          gpus:
+          - deviceName: nvidia.com/gpu
+            name: gpu1
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 8G
+      volumes:
+      - name: win-iso
+        containerDisk:
+          image: /windows-10-iso:latest
+      - name: virtio-drivers
+        containerDisk:
+          image: quay.io/kubevirt/virtio-container-disk
+      - name: harddrive
+        persistentVolumeClaim:
+          claimName: winhd2
