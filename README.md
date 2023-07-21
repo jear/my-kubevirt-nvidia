@@ -52,8 +52,8 @@ $ cat /proc/cpuinfo | grep --color vmx
 sudo dmesg | grep -i -e DMAR -e IOMMU
 
 sudo vi /etc/default/grub
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on nouveau.modeset=0 kvm.ignore_msrs=1 vfio-pci.ids=10de:13f3"
-GRUB_CMDLINE_LINUX="quiet splash intel_iommu=on nouveau.modeset=0 kvm.ignore_msrs=1 vfio-pci.ids=10de:13f3"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash pci=realloc=off"
+GRUB_CMDLINE_LINUX="nofb console=tty0 intel_iommu=on nouveau.modeset=0 kvm.ignore_msrs=1 vfio-pci.ids=10de:13f3"
 
 sudo update-grub
 
