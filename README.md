@@ -7,23 +7,6 @@ helm upgrade --install gpu-operator nvidia/gpu-operator -n gpu-operator --create
 
 ```
 
-
-# Kubevirt
-
-```
-# Kubevirt Windows without nVidia
-https://medium.com/adessoturkey/create-a-windows-vm-in-kubernetes-using-kubevirt-b5f54fb10ffd
-```
-
-
-```
-# if you can access to nvid.nvidia.com..... Build nVidia vGPU (for kubevirt use case )
-Download the vGPU Software from the NVIDIA Licensing Portal. https://nvid.nvidia.com/dashboard/#/dashboard
-https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-operator-kubevirt.html#build-vgpu-manager-image
-```
-
-
-
 ```
 # Node selector
 kubectl get node -o json | jq '.items[].metadata.labels' | grep -i product
@@ -31,6 +14,15 @@ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i product
   "nvidia.com/gpu.product": "Tesla-M6",
 
 ```
+
+
+# Kubevirt
+
+```
+# Test Kubevirt Windows without attaching a nVidia GPU   => OK
+https://medium.com/adessoturkey/create-a-windows-vm-in-kubernetes-using-kubevirt-b5f54fb10ffd
+```
+
 
 ```
 # Host preparation for PCI Passthrough
