@@ -1,6 +1,6 @@
 # GPU operator
 ```
-#  for Kubevirt with passthrough with sandboxing
+#  for Kubevirt with passthrough and sandboxing
 helm upgrade --install gpu-operator nvidia/gpu-operator -n gpu-operator --create-namespace \
              --set operator.upgradeCRD=true --disable-openapi-validation \
              --set sandboxWorkloads.enabled=true
