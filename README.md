@@ -53,7 +53,8 @@ sudo dmesg | grep -i -e DMAR -e IOMMU
 
 sudo vi /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="maybe-ubiquity"
-GRUB_CMDLINE_LINUX="quiet splash pci=realloc=off console=tty0 nofb intel_iommu=on nouveau.modeset=0 kvm.ignore_msrs=1 vfio-pci.ids=10de:13f3"
+GRUB_CMDLINE_LINUX="quiet splash pci=realloc=off intel_iommu=on nouveau.modeset=0"
+#### nofb kvm.ignore_msrs=1 vfio-pci.ids=xxxx:yyyy
 
 sudo update-grub
 
