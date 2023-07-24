@@ -26,6 +26,8 @@ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i product
 ```
 # Test Kubevirt Windows without attaching a nVidia GPU   => OK
 https://medium.com/adessoturkey/create-a-windows-vm-in-kubernetes-using-kubevirt-b5f54fb10ffd
+
+https://kubevirt.io/user-guide/virtual_machines/service_objects/
 ```
 
 
