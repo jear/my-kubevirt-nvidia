@@ -71,6 +71,19 @@ kubectl delete -f https://github.com/kubevirt/kubevirt/releases/download/${VERSI
 kubectl delete -f https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/kubevirt-operator.yaml
 ```
 
+# patching image tag 1.2.1 to 1.2.2 for device naming 
+```
+k edit clusterpolicies.nvidia.com cluster-policy
+
+  sandboxDevicePlugin:
+    enabled: true
+    image: kubevirt-gpu-device-plugin
+    imagePullPolicy: IfNotPresent
+    repository: nvcr.io/nvidia
+    version: v1.2.2
+
+```
+
 
 ```
 # Kubevirt and nVidia pGPU ( passthrough GPU )
