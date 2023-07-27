@@ -25,7 +25,7 @@ spec:
           cores: 6
         devices:
           gpus:
-          - deviceName: "nvidia.com/ARIEL_DEVICE_24_FUNCTION_3"
+          - deviceName: "nvidia.com/GM204GL_TESLA_M6"
             name: gpu1
           disks:
           - bootOrder: 1
