@@ -139,7 +139,7 @@ spec:
     permittedHostDevices:
       pciHostDevices:
       - pciVendorSelector: 10DE:13f3
-        resourceName: nvidia.com/XXXXXXXXXXXXXXX
+        resourceName: nvidia.com/GM204GL_TESLA_M6
 
 
 ```
