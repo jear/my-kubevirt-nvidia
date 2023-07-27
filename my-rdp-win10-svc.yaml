@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: metallb-nginx-svc
+  namespace: default
+  annotations:
+    metallb.universe.tf/address-pool: addresspool-sample1
+spec:
+  externalTrafficPolicy: Local
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: tcp-5678
+      protocol: TCP
+      port: 5678
+      targetPort: 80
+  type: LoadBalancer
+  selector:
+    metallb-service: nginx

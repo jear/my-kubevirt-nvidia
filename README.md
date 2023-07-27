@@ -160,6 +160,10 @@ nvidia-vfio-manager-sswb8                                     1/1     Running   
 
 ```
 
+# RDP or xRDP
+```
+virtctl expose virtualmachineinstance win10-tesla-m6 --name lbsvc --type LoadBalancer --port 33890 --target-port 3389
+```
 
 # Troubleshooting
 ```
