@@ -7,8 +7,8 @@ spec:
   # source & target definitions
   source:
     apiGroup: kubevirt.io
-    kind: VirtualMachine
-    name: win10-tesla-m6
+    kind: VirtualMachineSnapshot
+    name: snap-win10-tesla-m6
   target:
     apiGroup: kubevirt.io
     kind: VirtualMachine

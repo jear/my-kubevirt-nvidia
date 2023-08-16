@@ -29,15 +29,29 @@ spec:
             name: gpu1
           disks:
           - bootOrder: 1
+            cdrom:
+              bus: sata
+            name: cdromiso
+          - bootOrder: 2
             disk:
               bus: virtio
             name: harddrive
+          - bootOrder: 3
+            cdrom:
+              bus: sata
+            name: virtiocontainerdisk
         machine:
           type: q35
         resources:
           requests:
             memory: 12G
       volumes:
+      - name: cdromiso
+        persistentVolumeClaim:
+          claimName: iso-win10
       - name: harddrive
         persistentVolumeClaim:
           claimName: winhd1
+      - containerDisk:
+          image: quay.io/kubevirt/virtio-container-disk
+        name: virtiocontainerdisk

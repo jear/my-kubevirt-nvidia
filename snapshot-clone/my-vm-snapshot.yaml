@@ -1,0 +1,9 @@
+apiVersion: snapshot.kubevirt.io/v1alpha1
+kind: VirtualMachineSnapshot
+metadata:
+  name: snap-win10-tesla-m6
+spec:
+  source:
+    apiGroup: kubevirt.io
+    kind: VirtualMachine
+    name: win10-tesla-m6
