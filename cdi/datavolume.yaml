@@ -1,7 +1,7 @@
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: DataVolume
 metadata:
-  name: "win10pro"
+  name: "datavolume-from-pvc"
 spec:
   source:
     pvc:
