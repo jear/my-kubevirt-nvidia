@@ -1,0 +1,40 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    kubevirt.io/vm: vm-dv-clone
+  name: vm-dv-clone 
+spec:
+  running: false
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: vm-dv-clone
+    spec:
+      domain:
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: root-disk
+        resources:
+          requests:
+            memory: 64M
+      volumes:
+      - dataVolume:
+          name: favorite-clone
+        name: root-disk
+  dataVolumeTemplates:
+  - metadata:
+      name: favorite-clone
+    spec:
+      storage:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 2Gi
+      source:
+        pvc:
+          namespace: "source-namespace"
+          name: "my-favorite-vm-disk"
