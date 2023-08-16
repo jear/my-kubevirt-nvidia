@@ -10,3 +10,5 @@ spec:
       featureGates:
         - GPU
         - DisableMDEVConfiguration
+        - Snapshot
+        - Livemigration
