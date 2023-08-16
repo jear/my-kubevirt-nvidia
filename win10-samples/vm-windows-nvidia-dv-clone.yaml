@@ -1,29 +1,38 @@
+---
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
   labels:
-    kubevirt.io/vm: vm-dv-clone
-  name: vm-dv-clone 
+    kubevirt.io/vm: win10-tesla-m6-dv-clone
+  name: win10-tesla-m6-dv-clone
 spec:
   running: false
   template:
     metadata:
       labels:
-        kubevirt.io/vm: vm-dv-clone
+        kubevirt.io/domain: win10-tesla-m6-dv-clone
     spec:
       domain:
+        cpu:
+          cores: 6
         devices:
+          gpus:
+          - deviceName: "nvidia.com/GM204GL_TESLA_M6"
+            name: gpu1
           disks:
-          - disk:
+          - bootOrder: 1
+            disk:
               bus: virtio
-            name: root-disk
+            name: harddrive
+        machine:
+          type: q35
         resources:
           requests:
-            memory: 64M
+            memory: 12G
       volumes:
       - dataVolume:
           name: favorite-clone
-        name: root-disk
+        name: harddrive
   dataVolumeTemplates:
   - metadata:
       name: favorite-clone
