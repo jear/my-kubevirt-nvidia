@@ -1,14 +1,15 @@
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: DataVolume
 metadata:
-  name: "cirros"
+  name: "win10pro"
 spec:
   source:
-    http:
-      url: "https://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img" # S3 or GCS
+    pvc:
+      namespace: "default"
+      name: "restore-6cd52cea-a4fd-496b-b96c-9c03caac7423-harddrive"
   pvc:
     accessModes:
     - ReadWriteOnce
     resources:
       requests:
-        storage: "64Mi"
+        storage: "150Gi"
