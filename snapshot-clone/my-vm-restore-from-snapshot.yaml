@@ -6,6 +6,5 @@ spec:
   target:
     apiGroup: kubevirt.io
     kind: VirtualMachine
-#    name: win10-tesla-m6
-    name: win10-tesla-m6-restore-from-snapshot
+    name: win10-tesla-m6
   virtualMachineSnapshotName: snap-win10-tesla-m6

@@ -1,7 +1,7 @@
 kind: VirtualMachineClone
 apiVersion: "clone.kubevirt.io/v1alpha1"
 metadata:
-  name: win10-tesla-m6-clone
+  name: win10-tesla-m6-clone-from-snap
 
 spec:
   # source & target definitions
@@ -12,5 +12,5 @@ spec:
   target:
     apiGroup: kubevirt.io
     kind: VirtualMachine
-    name: win10-tesla-m6-clone
+    name: win10-tesla-m6-clone-from-snap
 
