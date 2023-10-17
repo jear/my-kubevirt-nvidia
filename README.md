@@ -71,7 +71,7 @@ kubectl delete -f https://github.com/kubevirt/kubevirt/releases/download/${VERSI
 kubectl delete -f https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/kubevirt-operator.yaml
 ```
 
-# patching image tag 1.2.1 to 1.2.2 for device naming 
+# (if necessary) patching image tag 1.2.1 to 1.2.2 for device naming 
 ```
 k edit clusterpolicies.nvidia.com cluster-policy
 
@@ -167,7 +167,16 @@ kubectl label node worker-gpu-2 --overwrite nvidia.com/gpu.workload.config=vm-pa
 kubectl label node worker-gpu-1 --overwrite nvidia.com/gpu.workload.config=container
 #kubectl label node worker-gpu-1 --overwrite nvidia.com/gpu.workload.config=vm-gpu
 ```
+```
+kubectl get node worker-gpu-1 -o json | jq '.status.allocatable | with_entries(select(.key | startswith("nvidia.com/"))) | with_entries(select(.value != "0"))'
+{}
 
+kubectl get node worker-gpu-2 -o json | jq '.status.allocatable | with_entries(select(.key | startswith("nvidia.com/"))) | with_entries(select(.value != "0"))'
+{
+  "nvidia.com/GM204GL_TESLA_M6": "2"
+}
+
+```
 
 ```
 k get pods -n gpu-operator 
