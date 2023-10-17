@@ -98,9 +98,22 @@ spec:
 
 ```
 
+# label worker GPU nodes ( here to allo container )
+```
+kubectl label node worker-gpu-1 --overwrite nvidia.com/gpu.workload.config=container
+
+
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i product
+  "nvidia.com/gpu.product": "Tesla-M6",
+
+kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
+  "nvidia.com/gpu.count": "1",
 
 ```
+
+
 # label worker GPU nodes ( here to allow vm-passthrough )
+```
 kubectl label node worker-gpu-2 --overwrite nvidia.com/gpu.workload.config=vm-passthrough
 
 kubectl get node worker-gpu-1 -o json | jq '.status.allocatable | with_entries(select(.key | startswith("nvidia.com/"))) | with_entries(select(.value != "0"))'
@@ -112,17 +125,7 @@ kubectl get node worker-gpu-2 -o json | jq '.status.allocatable | with_entries(s
 }
 ```
 
-```
-# label worker GPU nodes ( here to allo container )
-kubectl label node worker-gpu-1 --overwrite nvidia.com/gpu.workload.config=container
 
-
-kubectl get node -o json | jq '.items[].metadata.labels' | grep -i product
-  "nvidia.com/gpu.product": "Tesla-M6",
-(base) ubuntu@worker11:~/.../my-gpu-operator$ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
-  "nvidia.com/gpu.count": "1",
-
-```
 
 ```
 k get pods -n gpu-operator 
