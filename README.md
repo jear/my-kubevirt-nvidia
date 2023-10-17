@@ -163,10 +163,13 @@ spec:
 
 ```
 # label worker GPU nodes ( here to allo vm-passthrough )
-kubectl label node worker-gpu-1 --overwrite nvidia.com/gpu.workload.config=vm-passthrough
-kubectl label node worker-gpu-2 --overwrite nvidia.com/gpu.workload.config=container
-kubectl label node worker-gpu-2 --overwrite nvidia.com/gpu.workload.config=vm-gpu
+kubectl label node worker-gpu-2 --overwrite nvidia.com/gpu.workload.config=vm-passthrough
+kubectl label node worker-gpu-1 --overwrite nvidia.com/gpu.workload.config=container
+#kubectl label node worker-gpu-1 --overwrite nvidia.com/gpu.workload.config=vm-gpu
+```
 
+
+```
 k get pods -n gpu-operator 
 NAME                                                          READY   STATUS      RESTARTS   AGE
 gpu-feature-discovery-wgg2t                                   1/1     Running     0          5d1h
