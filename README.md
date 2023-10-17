@@ -12,14 +12,6 @@ helm upgrade --install gpu-operator nvidia/gpu-operator -n gpu-operator --create
              --set vgpuManager.enabled=true 
 ```
 
-```
-# For Node selector
-kubectl get node -o json | jq '.items[].metadata.labels' | grep -i product
-
-  "nvidia.com/gpu.product": "Tesla-M6",
-
-```
-
 
 # Kubevirt + Rook-Ceph + nVidia GPU operator and passthrough
 
@@ -29,33 +21,6 @@ https://medium.com/adessoturkey/create-a-windows-vm-in-kubernetes-using-kubevirt
 
 https://kubevirt.io/user-guide/virtual_machines/service_objects/
 ```
-
-
-```
-sudo vi /etc/default/grub
-GRUB_CMDLINE_LINUX_DEFAULT="maybe-ubiquity"
-GRUB_CMDLINE_LINUX="quiet splash pci=realloc=off intel_iommu=on nouveau.modeset=0"
-#### nofb kvm.ignore_msrs=1 vfio-pci.ids=xxxx:yyyy
-
-sudo update-grub
-
-
-
-cat /etc/modprobe.d/blacklist-nvidia-nouveau.conf 
-blacklist nouveau
-options nouveau modeset=0
-
-#cat /etc/modprobe.d/vfio.conf
-#blacklist snd_hda_intel
-#options vfio-pci ids=xxxx:yyyy
-
-
-sudo update-initramfs -u
-
-
-# reboot
-```
-
 
 
 ```
@@ -85,40 +50,13 @@ k edit clusterpolicies.nvidia.com cluster-policy
 ```
 
 
-```
+
 # Kubevirt and nVidia pGPU ( passthrough GPU )
 
 https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-operator-kubevirt.html
 https://kubevirt.io/user-guide/virtual_machines/host-devices/#listing-permitted-devices
 
-# Get device ID
-####
-ssh worker-gpu-1
-lspci -nnv|grep -i nvidia
-21:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1) (prog-if 00 [VGA controller])
-	Subsystem: NVIDIA Corporation GM204GL [Tesla M6] [10de:1143]
-	Kernel driver in use: nvidia
-	Kernel modules: nvidiafb, nouveau
-
-lspci -DD|grep NVIDIA
-0000:21:00.0 VGA compatible controller: NVIDIA Corporation GM204GL [Tesla M6] (rev a1)
-
-####
-ssh worker-gpu-2
-lspci -nnv|grep -i nvidia
-23:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1) (prog-if 00 [VGA controller])
-	Subsystem: NVIDIA Corporation GM204GL [Tesla M6] [10de:1143]
-	Kernel driver in use: nvidia
-	Kernel modules: nvidiafb, nouveau
-26:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1) (prog-if 00 [VGA controller])
-	Subsystem: NVIDIA Corporation GM204GL [Tesla M6] [10de:1143]
-	Kernel driver in use: nvidia
-	Kernel modules: nvidiafb, nouveau
-
-lspci -DD|grep NVIDIA
-0000:23:00.0 VGA compatible controller: NVIDIA Corporation GM204GL [Tesla M6] (rev a1)
-0000:26:00.0 VGA compatible controller: NVIDIA Corporation GM204GL [Tesla M6] (rev a1)
-
+```
 ####
 # FeatureGate
 ( https://kubevirt.io/user-guide/operations/activating_feature_gates/ )
@@ -220,7 +158,64 @@ virtctl expose virtualmachineinstance win10-tesla-m6 --name lbsvc --type LoadBal
 # Host preparation for PCI Passthrough
 https://kubevirt.io/user-guide/virtual_machines/host-devices/#host-preparation-for-pci-passthrough
 https://askubuntu.com/questions/1406888/ubuntu-22-04-gpu-passthrough-qemu
+```
 
+
+```
+sudo vi /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="maybe-ubiquity"
+GRUB_CMDLINE_LINUX="quiet splash pci=realloc=off intel_iommu=on nouveau.modeset=0"
+#### nofb kvm.ignore_msrs=1 vfio-pci.ids=xxxx:yyyy
+
+sudo update-grub
+
+
+
+cat /etc/modprobe.d/blacklist-nvidia-nouveau.conf 
+blacklist nouveau
+options nouveau modeset=0
+
+#cat /etc/modprobe.d/vfio.conf
+#blacklist snd_hda_intel
+#options vfio-pci ids=xxxx:yyyy
+
+
+sudo update-initramfs -u
+
+
+# reboot
+```
+```
+# Get device ID
+####
+ssh worker-gpu-1
+lspci -nnv|grep -i nvidia
+21:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1) (prog-if 00 [VGA controller])
+	Subsystem: NVIDIA Corporation GM204GL [Tesla M6] [10de:1143]
+	Kernel driver in use: nvidia
+	Kernel modules: nvidiafb, nouveau
+
+lspci -DD|grep NVIDIA
+0000:21:00.0 VGA compatible controller: NVIDIA Corporation GM204GL [Tesla M6] (rev a1)
+
+####
+ssh worker-gpu-2
+lspci -nnv|grep -i nvidia
+23:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1) (prog-if 00 [VGA controller])
+	Subsystem: NVIDIA Corporation GM204GL [Tesla M6] [10de:1143]
+	Kernel driver in use: nvidia
+	Kernel modules: nvidiafb, nouveau
+26:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1) (prog-if 00 [VGA controller])
+	Subsystem: NVIDIA Corporation GM204GL [Tesla M6] [10de:1143]
+	Kernel driver in use: nvidia
+	Kernel modules: nvidiafb, nouveau
+
+lspci -DD|grep NVIDIA
+0000:23:00.0 VGA compatible controller: NVIDIA Corporation GM204GL [Tesla M6] (rev a1)
+0000:26:00.0 VGA compatible controller: NVIDIA Corporation GM204GL [Tesla M6] (rev a1)
+```
+
+```
 lspci -nnk | grep -i nvidia
 23:00.0 VGA compatible controller [0300]: NVIDIA Corporation GM204GL [Tesla M6] [10de:13f3] (rev a1)
 	Subsystem: NVIDIA Corporation GM204GL [Tesla M6] [10de:1143]
