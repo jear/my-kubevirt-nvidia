@@ -1,0 +1,27 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  # The name for the new PersistentVolumeClaim, must be unique in your
+  # namespace
+  name: clone-restore-b70d44da-2025-4798-95e4-85d06471eb6b-harddrive
+#  labels:
+#    # Copy any labels of the form "image.sandbox.wazi.ibm.com/*" from
+#    # the source claim ("my-sandbox-storage" in this example)
+#    image.sandbox.wazi.ibm.com/status: ready
+#    image.sandbox.wazi.ibm.com/type: complete
+#    image.sandbox.wazi.ibm.com/version: v1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      # This must be same size or larger than the source claim
+      # (the size of "my-sandbox-storage" in this example)
+      storage: 150Gi
+  # This must be same storage class as the source claim
+  # (the storage class of "my-sandbox-storage" in this example)
+  storageClassName: rook-ceph-block
+  volumeMode: Filesystem
+  dataSource:
+    kind: PersistentVolumeClaim
+    name: restore-b70d44da-2025-4798-95e4-85d06471eb6b-harddrive

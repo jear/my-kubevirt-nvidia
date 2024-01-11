@@ -46,4 +46,4 @@ spec:
       source:
         pvc:
           namespace: "default"
-          name: "winhd1"
+          name: "restore-6cd52cea-a4fd-496b-b96c-9c03caac7423-harddrive"
