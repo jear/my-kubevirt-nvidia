@@ -6,6 +6,7 @@ helm upgrade --install gpu-operator nvidia/gpu-operator -n gpu-operator --create
              --set sandboxWorkloads.enabled=true
 
 #  for Kubevirt with vGPU and sandboxing
+# https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-operator-kubevirt.html#install-the-gpu-operator-with-nvidia-vgpu
 helm upgrade --install gpu-operator nvidia/gpu-operator -n gpu-operator --create-namespace  \
              --set operator.upgradeCRD=true --disable-openapi-validation \
              --set sandboxWorkloads.enabled=true \
