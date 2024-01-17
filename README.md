@@ -117,13 +117,15 @@ kubectl get node -o json | jq '.items[].metadata.labels' | grep -i count
 ```
 kubectl label node worker-gpu-2 --overwrite nvidia.com/gpu.workload.config=vm-passthrough
 
-kubectl get node worker-gpu-1 -o json | jq '.status.allocatable | with_entries(select(.key | startswith("nvidia.com/"))) | with_entries(select(.value != "0"))'
-{}
-
-kubectl get node worker-gpu-2 -o json | jq '.status.allocatable | with_entries(select(.key | startswith("nvidia.com/"))) | with_entries(select(.value != "0"))'
+(base) ubuntu@worker11:~$ kubectl get node worker-gpu-1 -o json | jq '.status.allocatable | with_entries(select(.key | startswith("nvidia.com/"))) | with_entries(select(.value != "0"))'
+{
+  "nvidia.com/gpu": "1"
+}
+(base) ubuntu@worker11:~$ kubectl get node worker-gpu-2 -o json | jq '.status.allocatable | with_entries(select(.key | startswith("nvidia.com/"))) | with_entries(select(.value != "0"))'
 {
   "nvidia.com/GM204GL_TESLA_M6": "2"
 }
+
 ```
 
 
