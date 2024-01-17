@@ -27,7 +27,7 @@ https://kubevirt.io/user-guide/virtual_machines/service_objects/
 ```
 # kubevirt install https://kubevirt.io/quickstart_cloud/
 echo $VERSION
-v1.0.0
+v1.1.1
 kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/kubevirt-operator.yaml
 kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/kubevirt-cr.yaml
 
@@ -46,7 +46,7 @@ k edit clusterpolicies.nvidia.com cluster-policy
     image: kubevirt-gpu-device-plugin
     imagePullPolicy: IfNotPresent
     repository: nvcr.io/nvidia
-    version: v1.2.2
+    version: v1.2.4
 
 ```
 
