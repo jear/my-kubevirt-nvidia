@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: winhd
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 150Gi
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: win10pro-tesla-m6
+spec:
+  running: false
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: win10pro-tesla-m6
+    spec:
+      domain:
+        cpu:
+          cores: 6
+        devices:
+          gpus:
+          - deviceName: "nvidia.com/GM204GL_TESLA_M6"
+            name: gpu1
+          disks:
+          - bootOrder: 1
+            disk:
+              bus: virtio
+            name: harddrive
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 12G
+      volumes:
+      - name: harddrive
+        persistentVolumeClaim:
+          claimName: winhd
