@@ -99,7 +99,7 @@ spec:
 
 ```
 
-# label worker GPU nodes ( here to allo container )
+# label worker GPU nodes ( here to allow container )
 ```
 kubectl label node worker-gpu-1 --overwrite nvidia.com/gpu.workload.config=container
 
