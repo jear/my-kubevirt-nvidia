@@ -27,7 +27,7 @@ https://kubevirt.io/user-guide/virtual_machines/service_objects/
 ```
 # kubevirt install https://kubevirt.io/quickstart_cloud/
 echo $VERSION
-v1.1.1
+v1.3.1
 kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/kubevirt-operator.yaml
 kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/kubevirt-cr.yaml
 
